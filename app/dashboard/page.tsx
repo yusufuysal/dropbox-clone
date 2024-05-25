@@ -1,15 +1,18 @@
 import Header from "@/components/Header";
-import { RedirectToSignIn, SignedOut } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 
 function page() {
   const { userId } = auth();
+
   if (!userId) {
+    return null;
+  }
+
+  if (userId) {
     return (
-      <div className=" min-h-full flex justify-center items-center">
-        <SignedOut>
-          <RedirectToSignIn />
-        </SignedOut>
+      <div>
+        <Header />
+        <p className=" text-black">this is the dashborad</p>
       </div>
     );
   }
