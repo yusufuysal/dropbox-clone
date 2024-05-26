@@ -1,3 +1,4 @@
+import Dropzone from "@/components/Dropzone";
 import { auth } from "@clerk/nextjs/server";
 
 function page() {
@@ -10,7 +11,7 @@ function page() {
   if (userId) {
     return (
       <div>
-        <p className=" text-black">this is the dashborad</p>
+        <Dropzone />
       </div>
     );
   }
