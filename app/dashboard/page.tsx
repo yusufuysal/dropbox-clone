@@ -1,4 +1,3 @@
-import Header from "@/components/Header";
 import { auth } from "@clerk/nextjs/server";
 
 function page() {
@@ -11,17 +10,10 @@ function page() {
   if (userId) {
     return (
       <div>
-        <Header />
         <p className=" text-black">this is the dashborad</p>
       </div>
     );
   }
-
-  return (
-    <>
-      <Header />
-    </>
-  );
 }
 
 export default page;
