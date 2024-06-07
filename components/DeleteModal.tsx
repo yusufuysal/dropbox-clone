@@ -17,13 +17,13 @@ import { deleteObject, ref } from "firebase/storage";
 export function DeleteModal() {
   const { user } = useUser();
 
-  const [isDeleteModalOpen, setIsDeleteModalOpen, fileId, setFileId] =
-    useAppStore((state) => [
+  const [isDeleteModalOpen, setIsDeleteModalOpen, fileId] = useAppStore(
+    (state) => [
       state.isDeleteModalOpen,
       state.setIsDeleteModalOpen,
       state.fileId,
-      state.setFileId,
-    ]);
+    ]
+  );
 
   async function deleteFile() {
     if (!user || !fileId) return;
@@ -55,9 +55,10 @@ export function DeleteModal() {
     >
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Share link</DialogTitle>
+          <DialogTitle>Are you sure you want to delete?</DialogTitle>
           <DialogDescription>
-            Anyone who has this link will be able to view this.
+            This action cannot be undone. This will permanently delete your
+            file!
           </DialogDescription>
         </DialogHeader>
 
@@ -75,6 +76,7 @@ export function DeleteModal() {
           <Button
             type="submit"
             size="sm"
+            variant={"destructive"}
             className="px-3 flex-1"
             onClick={() => deleteFile()}
           >
