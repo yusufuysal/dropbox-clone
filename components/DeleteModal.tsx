@@ -13,6 +13,7 @@ import { useAppStore } from "@/store/store";
 import { useUser } from "@clerk/nextjs";
 import { deleteDoc, doc } from "firebase/firestore";
 import { deleteObject, ref } from "firebase/storage";
+import toast from "react-hot-toast";
 
 export function DeleteModal() {
   const { user } = useUser();
@@ -28,21 +29,28 @@ export function DeleteModal() {
   async function deleteFile() {
     if (!user || !fileId) return;
 
+    const toastId = toast.loading("Deleting...");
+
     const fileRef = ref(storage, `users/${user.id}/files/${fileId}`);
 
     try {
       deleteObject(fileRef)
         .then(async () => {
           deleteDoc(doc(db, "users", user.id, "files", fileId)).then(() => {
-            console.log("File is successfully deleted!");
+            toast.success("Deleted Successfully", {
+              id: toastId,
+            });
           });
         })
         .finally(() => {
           setIsDeleteModalOpen(false);
         });
     } catch (error) {
-      console.log(error);
       setIsDeleteModalOpen(false);
+
+      toast.error("An error occured about deleting the file", {
+        id: toastId,
+      });
     }
   }
 

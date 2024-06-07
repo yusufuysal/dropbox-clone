@@ -11,6 +11,7 @@ import { useAppStore } from "@/store/store";
 import { useUser } from "@clerk/nextjs";
 import { doc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
@@ -28,8 +29,14 @@ export function RenameModal() {
   const renameFile = async () => {
     if (!user || !fileId) return;
 
+    const toastId = toast.loading("Renaming...");
+
     await updateDoc(doc(db, "users", user.id, "files", fileId), {
       filename: input,
+    });
+
+    toast.success("Renamed Successfully", {
+      id: toastId,
     });
 
     setInput("");
