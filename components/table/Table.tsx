@@ -18,8 +18,9 @@ import {
 import { useAppStore } from "@/store/store";
 import { FileType } from "@/types";
 import { PencilIcon, TrashIcon } from "lucide-react";
-import { Button } from "../ui/button";
 import { DeleteModal } from "../DeleteModal";
+import { RenameModal } from "../RenameModal";
+import { Button } from "../ui/button";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -53,6 +54,14 @@ export function DataTable<TData, TValue>({
     setFileId(fileId);
     setFilename(filename);
     setIsRenameModalOpen(true);
+
+    console.log(
+      "OPEN RENAME MODAL",
+      "filename: ",
+      filename,
+      " file id: ",
+      fileId
+    );
   };
 
   return (
@@ -84,6 +93,7 @@ export function DataTable<TData, TValue>({
                 data-state={row.getIsSelected() && "selected"}
               >
                 <DeleteModal />
+                <RenameModal />
                 {row.getVisibleCells().map((cell) => (
                   <TableCell key={cell.id}>
                     {cell.column.id === "timestamp" ? (
